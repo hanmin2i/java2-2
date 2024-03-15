@@ -11,3 +11,4 @@
  git graph로 git 내가 짠 코드 로그 확인 가능 graph로 간편하게 버전태그 사용가능
  git명령어는 gifignore.io에서 확인 가능
  끄기전에 commit과 push는 필수
+ extention에서 java맨위에 다운하면 쉽게 vs에서 자바 사용가능
