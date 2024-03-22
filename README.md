@@ -2,7 +2,7 @@
 
 
  ## ex 3월 22일
-
+ c+s+p=> java project create 생성후 workspace에 파일 만들기 
 
  ## 3월 15일 
  오늘은 git에서 새로운repository를 하나 만들었다 거기서 클론으로 내README 파일을 하나 만들었다    
