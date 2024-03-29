@@ -21,6 +21,6 @@ public class practice {
         else{
         System.out.println("잘못된 입력입니다");
     }
-
+          scanner.close();
     }
 }
