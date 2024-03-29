@@ -15,7 +15,8 @@
  강제 타입 변환은 ()안에 타입 변환 ex) (int), (byte) 등  
  System.in : 키보드와 연결된 자바의 표준 입력 스트림 사용할때는 Scanner사용  
  연산 : 주어진 식을 계산하여 결과를 얻어냄  
- 비교 연산자, 논리연산자, 삼항연산자
+ 비교 연산자, 논리연산자, 삼항연산자  
+ 조건문 if, if else문, switch문, case문, break문
  ## 3월 22일
  c+s+p=> java project create 생성후 workspace에 파일 만들기   
  자바 디버그 F5 만약에 디버깅이 안돼면 파일 삭제후 다시 설치하거나 vs코드 재부팅  
