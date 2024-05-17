@@ -8,11 +8,139 @@
 4. CardLayout : 컨테이너의 공간에 컴포넌트를 포개어 배치  
 setLayout : 새로운 배치관리자 설정 --> 디폴트 배치관리자를 변경
  ex) container.setLayout(new FlowLayout)  
-### 배치방법
+
+### FlowLayout 
+FlowLayout() 대문자로 시작 ex) (FlowLayout LEFT) hGap-> 좌우, vGap-> 상하 디폴트값은 5  
+ex)  
+```java 
+import javax.swing.*;
+import java.awt.*;
+
+public class FlowLayoutEx extends JFrame{
+    public FlowLayoutEx() {
+        setTitle("FLowLayout 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container contentPane = getContentPane();
+
+        contentPane.setLayout(new FlowLayout(FlowLayout.LEFT, 30,40));
+    
+        contentPane.add(new JButton("add"));
+        contentPane.add(new JButton("sub"));
+        contentPane.add(new JButton("mul"));
+        contentPane.add(new JButton("div"));
+        contentPane.add(new JButton("Calculate"));
+        
+        setSize(300, 200);
+        setVisible(true);
+    }
+    public static void main(String[] args) {
+        new FlowLayoutEx();
+    }
+}
+
+```
+### BorderLayout 
+배치방법 : 컨테이너 공간을 5구역으로 분할,배치
+생성자 : BorderLayout() -> 디폴트 값은 0  
+ex) 
+```java 
+import javax.swing.*;
+import java.awt.*;
+
+public class BorderLayoutEx extends JFrame{
+    public BorderLayoutEx() {
+        setTitle("BorderLayoutEx 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container contentPane = getContentPane();
+
+        contentPane.setLayout(new BorderLayout(30,40));
+    
+        contentPane.add(new JButton("Calculate"));
+        contentPane.add(new JButton("add"));
+        contentPane.add(new JButton("sub"));
+        contentPane.add(new JButton("mul"));
+        contentPane.add(new JButton("div"));
+        
+        
+        setSize(300, 200);
+        setVisible(true);
+    }
+    public static void main(String[] args) {
+        new BorderLayoutEx();
+    }
+}
+
+```
+### GridLayout
+배치방법 : 컨테이너 공간을 동일한 사각형 격자로 분활하고 각 셀에 컴포넌트 하나씩 배치
+생성자 : GridLayout(행의 수, 열의 수)  
+ex)
+```java
+import javax.swing.*;
+import java.awt.*;
+
+public class BorderLayoutEx extends JFrame{
+    public BorderLayoutEx() {
+        setTitle("BorderLayoutEx 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container contentPane = getContentPane();
+
+        contentPane.setLayout(new BorderLayout(30,40));
+    
+        contentPane.add(new JButton("Calculate"));
+        contentPane.add(new JButton("add"));
+        contentPane.add(new JButton("sub"));
+        contentPane.add(new JButton("mul"));
+        contentPane.add(new JButton("div"));
+        
+        
+        setSize(300, 200);
+        setVisible(true);
+    }
+    public static void main(String[] args) {
+        new BorderLayoutEx();
+    }
+}
+```
+### 배치 관리자가 없는 컨테이너가 필요한 경우
+- 응용프로그램에서 직접 컴포넌트의 크기의 위치를 결정하고자 하는 경우
+### 배치 관리자가 없는 컨테이너에 컴포넌트 삽입
+- 프로그램에서 컴폰너트의 절대 크기와 위치 설정
+- 컴폰너트들이 서로 겹치게 할 수 있음  
+ex)
+```java
+import javax.swing.*;
+import java.awt.*;
+
+public class NullContainerEx extends JFrame {
+    public NullContainerEx(){
+        setTitle("배치관리자 없이 절대 위치에 배치하는 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container contentPane = getContentPane();
+        contentPane.setLayout(null);
+
+        JLabel la = new JLabel("Hello, Press Buttons");
+        la.setBounds(130, 50, 200, 20);
+        contentPane.add(la);
+
+        for(int i=1; i<9; i++){
+            JButton b = new JButton(Integer.toString(i));
+            b.setLocation(i*15, i*15);
+            b.setSize(50, 20);
+            contentPane.add(b);
+        }
+
+        setSize(300,200);
+        setVisible(true);
+    }
+    public static void main(String[] args) {
+        
+    new NullContainerEx();
+    }
+}
+```
 
 
-### FlowLayout 생성자
-FlowLayout() 대문자로 시작 ex) (FlowLayout LEFT) hGap-> 좌우, vGap-> 상하 디폴트값은 5
 ## 5월 3일
 제네릭 : 특정 타입만ㄴ 다루지않고, 여러 종류의 타입으로 변신할 수 있도록 클래스나 메소드를 일반화 시키는 기법 ex) 벡터  
 일반화된 틀을 만드는 기법  
