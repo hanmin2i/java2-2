@@ -8,7 +8,7 @@ public class ContentPaneEx extends JFrame {
 
         Container contentPane = getContentPane();
         contentPane.setBackground(Color.ORANGE);
-        contentPane.setLayout(new FlowLayout());
+        contentPane.setLayout(new FlowLayoutEx());
 
         contentPane.add(new JButton("OK"));
         contentPane.add(new JButton("Cancel"));
