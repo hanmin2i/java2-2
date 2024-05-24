@@ -1,5 +1,64 @@
 # 이한민 202130126
+9,10,12,13장 
 
+## 5월 24일
+### 이벤트 기반 프로그래밍
+1. 이벤트의 발생에 의해 프고르램이 결정되는 방식  반대되는 방식 : 배치 실행  
+이벤트 종류 : 마우스 드레그, 마우스 클릭, 키보드 누름 등 - 네트워크로부터 데이터 송수신  
+2. 이벤트 객체가 포함하는 정보
+- 이벤트 종류와 이벤트 소스  
+- 이벤트가 발생한 화면 좌표 및 컴포넌트 내 좌표  
+- 이벤트가 발생한 버튼이나 메뉴 아이템의 문자열  
+- 클릭된 마우스 버튼 번호 및 마우싀 클릭 횟수  
+- 키의 코드 값과 문자 값  
+3. 리스너 인터페이스  
+- 이벤트 리스너 : 이벤트를 처리하는 자바 프로그램 코드, 클래스로 작성  
+- 다양한 리스너 인터페이스  
+ex) interface MouseListener, ActionListener  
+- 인터페이스 구현  
+ex) class Name implement ActionListener 상속을 받을떄 extends 말고 implement 사용  
+4. 이벤트 리스너 작성 방법  
+- 3가지 방법  
+1) 독립 클래스로 작성 
+2) 내부 클래스(inner class)로 작성
+3) 익명 클래스(anonymosu class)로 작성
+
+ex) 
+ ```java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class IndepClassListener extends JFrame{
+    public IndepClassListener() {
+        setTitle("Actrion 이벤트 리스너");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        Container c = getContentPane();
+        c.setLayout(new FlowLayout());
+        JButton btn = new JButton("Action");
+        btn.addActionListener(new MyActionListener());
+        c.add(btn);
+
+        setSize(250, 120);
+        setVisible(true);
+    }
+    public static void main(String[] args) {
+        new IndepClassListener();
+    }
+    
+}
+
+class MyActionListener implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
+        JButton b = (JButton)e.getSource();
+        if(b.getText().equals("Action"))
+        b.setText("액션");
+        else
+        b.setText("Action");
+    }
+}
+```
 ## 5월 17일
 ### 컨테이너 배치  
 1. FLowLayout 배치관리자 : 왼쪽에서 오른쪽으로 배치
