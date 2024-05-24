@@ -23,7 +23,7 @@ ex) class Name implement ActionListener 상속을 받을떄 extends 말고 imple
 2) 내부 클래스(inner class)로 작성
 3) 익명 클래스(anonymosu class)로 작성
 
-ex) 
+ex) 독립코드로 만들떄
  ```java
 import javax.swing.*;
 import java.awt.*;
@@ -59,6 +59,132 @@ class MyActionListener implements ActionListener {
     }
 }
 ```
+ex) 내부 클래스로 만들떄  
+```java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class IndepClassListener extends JFrame{
+    public IndepClassListener() {
+        setTitle("Actrion 이벤트 리스너");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        Container c = getContentPane();
+        c.setLayout(new FlowLayout());
+        JButton btn = new JButton("Action");
+        btn.addActionListener(new MyActionListener());
+        c.add(btn);
+
+        setSize(250, 120);
+        setVisible(true);
+    }
+    class MyActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+            JButton b = (JButton)e.getSource();
+            if(b.getText().equals("Action"))
+            b.setText("액션");
+            else
+            b.setText("Action");
+
+            IndepClassListener.this.setTitle(b.getText());
+        }
+    }
+
+    public static void main(String[] args) {
+        new IndepClassListener();
+    }
+    
+}
+```
+5. 익명 클래스  
+- 이름 없는 클래스: 클래스 선언+ 인스턴스 생성 한번에 하기
+ex) 익명 클래스 예제  
+```java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class AnonymousClassListener extends JFrame{
+    public AnonymousClassListener() {
+        setTitle("Actrion 이벤트 리스너");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        Container c = getContentPane();
+        c.setLayout(new FlowLayout());
+        JButton btn = new JButton("Action");
+        c.add(btn);
+        
+        btn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JButton b =(JButton)e.getSource();
+                if(b.getText().equals("Action"))
+                b.setText("액션");
+                else
+                b.setText("Action");
+                setTitle(b.getText());
+            }
+        });
+
+        setSize(250, 120);
+        setVisible(true);
+    }
+    
+
+    public static void main(String[] args) {
+        new AnonymousClassListener();
+    }
+    
+} 
+```
+6. 마우스 이벤트 리스너  
+ex) 예제 
+```java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class MouseListenerEx extends JFrame{
+    private JLabel la =new JLabel("Hello");
+
+    public MouseListenerEx() {
+        setTitle("Mouse 이벤ㅌ ㅇ제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container c=getContentPane();
+        c.addMouseListener(new MyMouseListener());
+
+        c.setLayout(null);
+        la.setSize(50, 20);
+        la.setLocation(30, 30);
+        c.add(la);
+
+        setSize(200, 200);
+        setVisible(true);
+    }
+
+    class MyMouseListener implements MouseListener{
+        public void mousePressed(MouseEvent e) {
+            int x=e.getX();
+            int y=e.getY();
+            la.setLocation(x, y);
+        }
+        public void mouseReleased(MouseEvent e) {}
+        public void mouseClicked(MouseEvent e) {}
+        public void mouseEntered(MouseEvent e) {}
+        public void mouseExited(MouseEvent e) {}
+    }
+    public static void main(String[] args) {
+        new MouseListenerEx();
+    }
+}
+```
+7. 키보드 이벤트와 포커스  
+- 키 입력시, 다음 세 경우 각각 Key 이벤트 발생  
+1) 키를 누르는 순간  
+2) 누른 키를 떼는 순간  
+3) 누른 키를 뗴는 순간(unicode 키의 경우만)  
+
+
 ## 5월 17일
 ### 컨테이너 배치  
 1. FLowLayout 배치관리자 : 왼쪽에서 오른쪽으로 배치
