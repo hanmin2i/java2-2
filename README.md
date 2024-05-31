@@ -1,6 +1,213 @@
 # 이한민 202130126
 9,10,12,13장 
 
+
+## 5월 31일
+
+### 자바 GUI 프로그래밍 방법
+- 컴포넌트 기반 GUI 프로그래밍
+- 그래픽 기반 GUI 프로그래밍  
+### JComponent 
+- : 스윙 컴포넌트는 모두 상속받는 슈퍼 클래스, 추상 클래스 
+ex) 
+```java 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class JcomponentEx extends JFrame{
+    public JcomponentEx() {
+        super("j컴포넌트의 공동 메소드 예제");
+        Container c = getContentPane();
+        c.setLayout(new FlowLayout());
+        JButton b1 = new JButton("magenta/tellow button");
+        JButton b2 = new JButton("Disabled Button");
+        JButton b3 = new JButton("getx(), gety()");
+        b1.setBackground(Color.YELLOW);
+        b1.setBackground(Color.MAGENTA);
+        b1.setFont(new Font("Arial", Font.ITALIC, 20));
+        b2.setEnabled(false);
+        b3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               JButton b =(JButton)e.getSource();
+               setTitle(b.getX() + "," + b.getY());
+            }
+        });
+        c.add(b1); c.add(b2); c.add(b3);
+        setSize(260, 200); setVisible(true);
+    }
+    public static void main(String[] args) {
+        new JcomponentEx();
+    }
+}
+```
+### JLabel
+- JLabel의 용도 : 문자열이나 이미지를 화면에 출력하기 위한 목적
+ex)  
+```java 
+import javax.swing.*;
+import java.awt.*;
+
+public class JlableEx extends JFrame{
+    public JlableEx() {
+        setTitle("레이블 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container c= getContentPane();
+        c.setLayout(new FlowLayout());
+
+        JLabel textLabel = new JLabel("제임스 뭐시기");
+
+        ImageIcon img = new ImageIcon("images/gosling.jpg");
+        JLabel imageLabel = new JLabel(img);
+
+        ImageIcon icon = new ImageIcon("images/icon.gif");
+        JLabel label = new JLabel("커피 가자", icon, SwingConstants.CENTER );
+        c.add(textLabel);  c.add(imageLabel); c.add(label);
+        setSize(300, 500);
+        setVisible(true);
+    }
+    public static void main(String[] args) {
+        new JlableEx();
+    }
+} 
+```
+### JButton
+- 용도 : 버튼 모양의 컴포넌트 
+- 이미지 로딩 
+### checkBox
+- 선택과 비선택 두 상태만 가지는 버튼  
+
+ex)
+
+```java 
+import javax.swing.*;
+import java.awt.*;
+public class CheckBoxEx extends JFrame {
+    public CheckBoxEx() {
+        setTitle("체크박스 만들기 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container c = getContentPane();
+        c.setLayout(new FlowLayout());
+        
+        JCheckBox apple = new JCheckBox("사과");
+        JCheckBox pear = new JCheckBox("배", true);
+        JCheckBox cherry = new JCheckBox("체리");
+        c.add(apple);
+        c.add(pear);
+        c.add(cherry);
+        setSize(250,150);
+        setVisible(true);
+}
+    public static void main(String [] args) {
+        new CheckBoxEx();
+}
+}
+```
+### Itemevent
+- item 이벤트 : 체크박스의 선택 상태에 변화가 생길때 발생하는 이벤트  
+
+ex)
+
+```java 
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.*;
+public class CheckBoxItemEventEx extends JFrame {
+    private JCheckBox [] fruits = new JCheckBox [3];
+    private String [] names = {"사과", "배", "체리"};
+    private JLabel sumLabel;
+    
+    public CheckBoxItemEventEx() {
+        setTitle("체크박스와 ItemEvent 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container c = getContentPane();
+        c.setLayout(new FlowLayout());
+        c.add(new JLabel("사과 100원, 배 500원, 체리 20000원"));
+        MyItemListener listener = new MyItemListener();
+         for(int i=0; i<fruits.length; i++) {
+          fruits[i] = new JCheckBox(names[i]);
+          fruits[i].setBorderPainted(true);
+          c.add(fruits[i]);
+          fruits[i].addItemListener(listener);
+}
+        sumLabel = new JLabel("현재 0 원 입니다.");
+        c.add(sumLabel);
+        setSize(250,200);
+        setVisible(true);
+}
+class MyItemListener implements ItemListener {
+    private int sum = 0; // 가격의 합
+    public void itemStateChanged(ItemEvent e) {
+        if(e.getStateChange() == ItemEvent.SELECTED) {
+         if(e.getItem() == fruits[0])
+             sum += 100;
+        else if(e.getItem() == fruits[1])
+            sum += 500;
+        else
+            sum += 20000;
+        }
+        else {
+            if(e.getItem() == fruits[0])
+            sum -= 100;
+        else if(e.getItem() == fruits[1])
+            sum -= 500;
+        else
+            sum -= 20000;
+    }
+    sumLabel.setText("현재 " + sum + "원 입니다.");
+    }
+    }
+     public static void main(String [] args) {
+         new CheckBoxItemEventEx();
+    }
+    }
+```
+
+### RadioButton
+- 버튼 그룹을 생성항ㄴ후, 그룹에 속한 버튼중 하나만 선택되는 버튼  
+
+ex)  
+```java 
+import javax.swing.*;
+import java.awt.*;
+
+public class RadioButtonEx extends JFrame {
+    public RadioButtonEx() {
+        setTitle("라디오버튼 만들기 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container c = getContentPane();
+        c.setLayout(new FlowLayout());
+        ButtonGroup g = new ButtonGroup(); 
+        ButtonGroup f = new ButtonGroup(); 
+        
+        JRadioButton apple = new JRadioButton("사과");
+        JRadioButton pear = new JRadioButton("배", true);
+        JRadioButton cherry = new JRadioButton("체리");
+        JRadioButton banana = new JRadioButton("바나나");
+    
+        g.add(apple);
+        g.add(pear);
+
+
+        f.add(cherry);
+        f.add(banana);
+      
+        c.add(apple); c.add(pear); c.add(cherry); c.add(banana);
+        setSize(250,150);
+        setVisible(true);
+}
+    public static void main(String [] args) {
+        new RadioButtonEx();
+}
+}
+
+```
+### JtextField
+- 한 줄의 문자열을 입력 받는 창 -> enter키 입력하면 action  
+
+
+
+
 ## 5월 24일
 ### 이벤트 기반 프로그래밍
 1. 이벤트의 발생에 의해 프고르램이 결정되는 방식  반대되는 방식 : 배치 실행  
