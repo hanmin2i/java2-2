@@ -205,6 +205,119 @@ public class RadioButtonEx extends JFrame {
 ### JtextField
 - 한 줄의 문자열을 입력 받는 창 -> enter키 입력하면 action  
 
+### JtextArea
+- 여러 줄의 문자열을 입력받을 수 잇는 창  
+ex)  
+
+```java 
+import javax.swing.*;
+import java.awt.event.*;
+import java.awt.*;
+
+public class TextAreaEx extends JFrame {
+    private JTextField tf = new JTextField(20);
+    private JTextArea ta = new JTextArea(7, 20);
+    public TextAreaEx() {
+    setTitle("텍스트영역 만들기 예제");
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    Container c = getContentPane();
+    c.setLayout(new FlowLayout());
+    c.add(new JLabel("입력 후 <Enter> 키를 입력하세요"));
+    c.add(tf);
+    c.add(new JScrollPane(ta));
+    tf.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            JTextField t = (JTextField)e.getSource();
+            ta.append(t.getText() + "\n");
+            t.setText("");
+         }
+         });
+    setSize(300,300);
+    setVisible(true);
+}
+    public static void main(String [] args) {
+        new TextAreaEx();
+}
+}
+```
+
+### JList<E>  
+- 하나 이상의 아이템을 보여주고 아이템을 선택하도록 하는 리스트  
+ex)  
+
+```java
+import javax.swing.*;
+import java.awt.*;
+
+public class ListEx extends JFrame {
+    private String [] fruits= {"apple", "banana", "kiwi", "mango",
+        "pear", "peach", "berry", "strawberry", "blackberry"};
+        private ImageIcon [] images = { new ImageIcon("images/icon1.png"),
+        new ImageIcon("images/icon.gif"),
+        new ImageIcon("images/icon3.png"),
+       
+        new ImageIcon("images/icon4.png") };
+        public ListEx() {
+            setTitle("리스트 만들기 예제");
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            Container c = getContentPane();
+            c.setLayout(new FlowLayout());
+           
+            JList<String> strList = new JList<String>(fruits);
+            c.add(strList);
+            JList<ImageIcon> imageList = new JList<ImageIcon>();
+            imageList.setListData(images);
+            c.add(imageList);
+            JList<String> scrollList = new JList<String>(fruits);
+            c.add(new JScrollPane(scrollList));
+           
+            setSize(300,300); setVisible(true);
+}
+    public static void main(String [] args) {   
+        new ListEx();
+}
+}
+```
+
+### JComboBox
+- 텍스트 필드와 버튼, 그리고 드롭다운 리스트로 구성되는 콤보박스  
+
+### 메뉴 구성  
+- 메뉴 아이템 :JMenuitem  
+- 메뉴 : JMenu  
+- 메뉴 바 : JMenuBar  
+- 분리선 : 메뉴 아이템 사이의 분리선  
+
+ex)  
+```java
+import javax.swing.*;
+public class MenuEx extends JFrame {
+    public MenuEx() {
+        setTitle("Menu 만들기 예제");
+        createMenu(); // 메뉴 생성, 프레임에 삽입
+        setSize(250,200);
+        setVisible(true);
+    }
+    public void createMenu() {
+        JMenuBar mb = new JMenuBar();
+        JMenu screenMenu = new JMenu("Screen");
+        screenMenu.add(new JMenuItem("Load"));
+        screenMenu.add(new JMenuItem("Hide"));
+        screenMenu.add(new JMenuItem("ReShow"));
+        screenMenu.addSeparator();
+        screenMenu.add(new JMenuItem("Exit"));
+        mb.add(screenMenu);
+        mb.add(new JMenu("Edit"));
+        mb.add(new JMenu("Source"));
+        mb.add(new JMenu("Project"));
+        mb.add(new JMenu("Run"));
+        setJMenuBar(mb);
+}
+public static void main(String [] args) {
+new MenuEx();
+}
+}
+```  
 
 
 
