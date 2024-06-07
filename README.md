@@ -1,6 +1,123 @@
 # 이한민 202130126
 9,10,12,13장 
 
+## 6월 7일  
+
+### 스윙 컴포넌트  
+- 스윙의 페인팅 기본  
+1) 모든 컴포넌트는 자신의 모양을 스스로 그린다.  
+2) 컨테이너는 자신을 그린 후 그 위에 자식 컴포넌트들에게 그리기 지시  
+3) paintComponent() 보유  
+
+- JPanel 
+
+- Graphics  
+1) 색 : Color  
+2) 폰트 : Font  
+- 도형 그리기  
+1) 선의 굵기 조절 X 
+
+- drawimage() 메소드
+ex)  
+```java
+import javax.swing.*;
+import java.awt.*;
+    public class paintJPanelEx extends JFrame {
+        public paintJPanelEx() {
+            setTitle("JPanel의 paintComponent() 예제");
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setContentPane(new MyPanel());
+            setSize(250,200);
+            setVisible(true);
+}
+
+    class MyPanel extends JPanel {
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.setColor(Color.BLUE); 
+            g.drawRect(10,10,50,50);
+            g.drawString("굿잡이에요",50,50);
+            g.setColor(new Color(255, 0, 0)); 
+            g.setFont(new Font("Arial", Font.ITALIC, 30));
+            g.drawString("akakakak", 30, 120);
+            g.drawRect(90,90,50,50);
+            g.drawLine(20, 20, 100, 100);
+            g.drawRoundRect(20,20,120,80,40,60);
+            g.drawArc(20,100,80,80,90,270);
+        }
+}
+    public static void main(String [] args) {
+        new paintJPanelEx();
+}
+}
+```  
+- repaint()  
+1) 모든 컴포넌트가 가지고있는 메소드  
+2) 개발자가 컴포넌트를 다시 그릴때 필요  
+ex)  
+```java 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class GraphicsDrawOvalMouseEx extends JFrame {
+    public GraphicsDrawOvalMouseEx() {
+        setTitle("마우스 드래깅으로 타원 그리기 예제");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setContentPane(new MyPanel());
+        setSize(300, 300);
+         setVisible(true);
+}
+    public static void main(String [] args) {
+        new GraphicsDrawOvalMouseEx();
+}
+
+    class MyPanel extends JPanel {
+        java.awt.Point start=null;
+        private java.awt.Point end=null; 
+        public MyPanel() {
+        MyMouseListener listener = new MyMouseListener();
+
+         addMouseListener(listener);
+            addMouseMotionListener(listener);
+    }
+class MyMouseListener extends MouseAdapter {
+    public void mousePressed(MouseEvent e) {
+            start = e.getPoint();
+    }
+    public void mouseDragged(MouseEvent e) {
+            end = e.getPoint();
+             repaint(); 
+    }
+    }
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+         if(start == null) 
+            return;
+            g.setColor(Color.BLUE); 
+            int x = Math.min(start.x, end.x);
+            int y = Math.min(start.y, end.y);
+            int width = Math.abs(start.x - end.x);
+            int height = Math.abs(start.y - end.y);
+            g.drawOval(x, y, width, height); 
+    }
+    }
+    }
+```  
+### 자바 스레드  
+
+- 멀티태스킹
+
+- 스레드 : 운영체제에 의해 관리되는 하나의 작업 혹은 태스크  
+- 스레드와 태스크는 바꾸어 사용해도 무관  
+- 멀티스레딩 : 여러 스레드를 동시에 실행시키는 응용프로그램을 작성하는 기법  
+
+- 멀티테스킹 구현 기술  
+1) 멀티프로세싱 : 하나의 응용프로그램이 여러개의 프로세스 생성, 각 프로세스가 하나의 작업을 처리하는 기법  
+2) 멀티스레딩 : 하나의 응용프로그램이 여러개의 스레드를 생성, 각 스레드가 하나의 작업을 처리  
+- 자바 스레드 : 자바 가상 기계에 의해 스케쥴되는 실행 단위의 코드 블럭  
+- 스레드 만드는 방법 : java.lang.Thread , java.lang.Runnable
+
 
 ## 5월 31일
 
