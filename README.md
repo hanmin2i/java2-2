@@ -116,7 +116,156 @@ class MyMouseListener extends MouseAdapter {
 1) 멀티프로세싱 : 하나의 응용프로그램이 여러개의 프로세스 생성, 각 프로세스가 하나의 작업을 처리하는 기법  
 2) 멀티스레딩 : 하나의 응용프로그램이 여러개의 스레드를 생성, 각 스레드가 하나의 작업을 처리  
 - 자바 스레드 : 자바 가상 기계에 의해 스케쥴되는 실행 단위의 코드 블럭  
-- 스레드 만드는 방법 : java.lang.Thread , java.lang.Runnable
+- 스레드 만드는 방법 : java.lang.Thread , java.lang.Runnable  
+ex) 
+```java 
+import java.awt.*;
+import javax.swing.*;
+
+class TimerThread extends Thread {
+    private JLabel timerLabel; 
+        public TimerThread(JLabel timerLabel) {
+            this.timerLabel = timerLabel;
+}
+
+@Override
+    public void run() {
+        int n=0; 
+        while(true) { 
+        timerLabel.setText(Integer.toString(n));
+        n++; 
+        try {
+        Thread.sleep(1000); 
+        }
+        catch(InterruptedException e) { return;}
+        }
+    }
+}
+public class ThreadTimerEx extends JFrame {
+    public ThreadTimerEx() {
+    setTitle("Thread를 상속받은 타이머 스레드 예제");
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    Container c = getContentPane();
+    c.setLayout(new FlowLayout());
+    
+    JLabel timerLabel = new JLabel();
+    timerLabel.setFont(new Font("Gothic", Font.ITALIC, 80));
+    c.add(timerLabel);
+    TimerThread th = new TimerThread(timerLabel);
+    setSize(250,150);
+    setVisible(true);
+    th.start(); 
+    }
+    public static void main(String[] args) {
+    new ThreadTimerEx();
+    }
+    }
+```  
+- 진동하는 스레드  
+ex) 
+```java
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Random;
+
+public class  VibratingFrame extends JFrame implements Runnable{
+
+    private Thread th;
+    public VibratingFrame() {
+        setTitle("진동하는 프레임");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(200,200);
+        setLocation(300,300);
+        setVisible(true);
+
+        getContentPane().addMouseListener(new MouseAdapter() {
+         public void mousePressed(MouseEvent e) {
+            if(!th.isAlive()) return;
+            th.interrupt();
+         }   
+        });
+        th =new Thread(this);
+        th.start();
+    }
+
+    public void run() {
+        Random r=new Random();
+        while (true) {
+            try{
+                Thread.sleep(20);
+            }
+            catch(InterruptedException e) {
+                return;
+            }
+            int x=getX() + r.nextInt()%5;
+            int y=getY() + r.nextInt()%5;
+            setLocation(x, y);
+        }
+    } 
+    public static void main(String[] args) {
+        new VibratingFrame();
+    }
+
+}
+```
+- 스레드 동기화 : 스레드 사이의 실행순서 제어, 공유데이터에 대한 접근을 원할하게 하는 기법  
+- 자바의 스레드 동기화 방법 : synchronized 키워드, wait() - notify()메소드  
+- 동기화의 필요성 : 두 스레드가 프린터에 동시에 쓰기로 충돌하는 경우  
+- synchronized 키워드 : 스레드가 독점적으로 실행해야하는 부분을 표시하는 키워드  
+ex)  
+```java 
+public class SynchronizedEx {
+    public static void main(String[] args) {
+    SharedPrinter p = new SharedPrinter(); 
+    String [] engText = { "Wise men say, ",
+                        "only fools rush in",
+                        "But I can't help, ",
+                        "falling in love with you",
+                        "Shall I stay? ",
+                        "Would it be a sin?",
+                        "If I can't help, ",
+                        "falling in love with you" };
+    String [] korText = { "동해물과 백두산이 마르고 닳도록, ",
+                        "하느님이 보우하사 우리 나라 만세",
+                        "무궁화 삼천리 화려강산, ",
+                        "대한 사람 대한으로 길이 보전하세",
+                        "남산 위에 저 소나무, 철갑을 두른 듯",
+                        "바람서리 불변함은 우리 기상일세.",
+                        "무궁화 삼천리 화려강산, ",
+                        "대한 사람 대한으로 길이 보전하세" };
+    Thread th1 = new WorkerThread(p, engText);
+    Thread th2 = new WorkerThread(p, korText);
+ 
+    th1.start();
+    th2.start();
+    }
+    }
+    class SharedPrinter {
+        
+        synchronized void print(String text) { //<-- 사용
+     
+        for(int i=0; i<text.length(); i++)
+        System.out.print(text.charAt(i));
+        System.out.println();
+        }
+        }
+    
+        class WorkerThread extends Thread {
+        private SharedPrinter p; 
+        private String [] text;
+        public WorkerThread(SharedPrinter p, String[] text) {
+        this.p = p; this.text = text;
+        }
+       
+        @Override
+        public void run() {
+        for (int i=0; i<text.length; i++) 
+        p.print(text[i]); 
+        }
+        }
+```  
+- wait()-notify() : 공유 데이터로 두 개 이상의 스레드가 데이터를 주고 받을 때
 
 
 ## 5월 31일
