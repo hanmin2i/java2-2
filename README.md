@@ -1,6 +1,39 @@
 # 이한민 202130126
 9,10,12,13장 
 
+
+## 6월 14일  
+
+### 스트림 연결  
+- 텍스트 파일을 읽기 위해 문자 스트림  FileReader 클래스 이용  
+- 파일 입출력동안 예외가 발생할수 있다 --> FileNotFoundException 발생  
+ex )  
+```java
+import java.io.*;
+
+    public class FileReaderEx {
+        public static void main(String[] args) {
+            FileReader in = null;
+    try {
+        in = new FileReader("c:\\windows\\system.ini");
+               int c;
+        while ((c = in.read()) != -1) { 
+                System.out.print((char)c);
+              }
+              in.close();
+             }
+              catch (IOException e) {
+               System.out.println("입출력 오류");
+  }
+ }
+}
+```  
+- 텍스트 파일에 쓰기 위해 문자 스트림 FileWriter 클래스 이용  
+- 바이너리 값을 파일에 저장하기  
+- 프로그램 내의 변수, 배열, 버퍼에 든 바이너리 값을 파일에 그대로 기록 : FileOutputStream 사용  
+- 바이너리 파일 읽기 : FileInputStream  
+
+
 ## 6월 7일  
 
 ### 스윙 컴포넌트  
